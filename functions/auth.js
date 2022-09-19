@@ -23,8 +23,6 @@ exports.saveUser = async (user) => {
         let token = null;
         let insertedU = null;
         if (!result) {
-            user.balance = 0;
-            user.currency = 'USD';
             insertedU = await database.collection('user').insertOne(user);
             token = await new Promise((resolve, reject) => {
                 jwt.sign({ user: { id: insertedU.insertedId.toString(), name: user.name, email: user.email, created: moment(new Date()).format('YYYY-MM-DD') } }, process.env.SECRET, { expiresIn: '24h' }, (err, token) => {
