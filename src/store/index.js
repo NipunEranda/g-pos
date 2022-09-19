@@ -1,33 +1,12 @@
 import { createStore } from 'vuex';
 import createPersistedState from "vuex-persistedstate";
-
-const getDefaultState = () => {
-  return {
-    currentUser: null,
-  }
-}
+import auth from './auth';
 
 const store = createStore({
-  state() {
-    return getDefaultState();
-  },
-  getters: {
-    getCurrentUser(state) {
-      return state.currentUser;
+    modules: {
+        auth: auth,
     },
-  },
-  mutations: {
-    updateCurrentUser(state, data) {
-      state.currentUser = data;
-    },
-  },
-  actions: {
-    updateCurrentUser(context, data) {
-      context.commit("updateCurrentUser", data);
-    },
-  },
-  plugins: [createPersistedState()]
-
+    plugins: [createPersistedState()]
 });
 
 export default store;
